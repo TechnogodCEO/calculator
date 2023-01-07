@@ -11,7 +11,7 @@ def B3(x):
 def B4(x,y):
   x = x/y
   return x
-def B5():
+def B5(x):
   print("mem cleared")
   return x
 def B6(x,m):
@@ -44,10 +44,11 @@ def B18():
 def B19():
   return 3
 def B20():
-  return 0 
+  return ""
 def B21():
   return 0 
 def B22():
   return "."
-
+def B23(x):
+  return x 
   
