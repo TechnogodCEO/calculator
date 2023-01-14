@@ -9,7 +9,9 @@ pygame.init()
 
 #placeholder varible for text blit
 x = ""
-
+val1 = ""
+val2 = ""
+clrontype = False 
 #initilize font
 Font = pygame.font.SysFont(None, 100)
 
@@ -17,10 +19,11 @@ Font = pygame.font.SysFont(None, 100)
 # create button class
 class button:
 
-    def __init__(self, name, x, y, w, h, value=None, op=None):
+    def __init__(self, name, x, y, w, h, value=None, op=None, mop=None):
         self.name = name
         self.value = value
         self.op = op
+        self.mop = mop
         self.x = x
         self.y = y
         self.w = w
@@ -40,34 +43,58 @@ class button:
             print("you pressed button " + self.name + " and the value is: " +
                   str(self.value))
             global x    
+            global val1
+            global clrontype
             if i.value != None:
-                if x == "" or int(x) <= 1000000:
+                if (x == "" or len(x) <= 8):
                     x += str(i.value)
-            elif i.op != None:
-                x = i.op(int(x))
+                if clrontype:
+                    x = str(i.value)
+                    clrontype = False
+            elif i.name == "b20": 
+                x = ""
+                val1 = ""
+            elif i.op != None and x:
+                x = str(i.op(float(x)))[:8]
                 print(x)
+            elif i.mop !=None and x:
+                
+            
+                if not val1:
+                    val1 = x
+                    clrontype = True
+                else:
+                    x = str(i.mop(float(val1), float(x)))
+                    print(x) 
+                    val1 = ""
+                    clrontype = True
+                    
+                    
+                # allow for new y value to be entered 
+                # store y value
+                # wait for equal
 
 #create class objects
-b1 = button("b1", 35, 305, 80, 50, None, f.B1)
-b2 = button("b2", 130, 305, 80, 50)
-b3 = button("b3", 220, 305, 80, 50)
-b4 = button("b4", 350, 305, 80, 50)
+b1 = button("b1", 35, 305, 80, 50, op=f.B1)
+b2 = button("b2", 130, 305, 80, 50, op=f.B2)
+b3 = button("b3", 220, 305, 80, 50, op=f.B3) #todo fix lots of decimals 
+b4 = button("b4", 350, 305, 80, 50, mop=f.B4)
 b5 = button("b5", 35, 380, 80, 50)
 b6 = button("b6", 130, 380, 80, 50)
 b7 = button("b7", 220, 380, 80, 50)
-b8 = button("b8", 350, 380, 80, 50)
+b8 = button("b8", 350, 380, 80, 50, mop=f.B8)
 b9 = button("b9", 35, 455, 80, 50, 7)
 b10 = button("b10", 130, 455, 80, 50, 8)
 b11 = button("b11", 220, 455, 80, 50, 9)
-b12 = button("b12", 350, 455, 80, 50)
+b12 = button("b12", 350, 455, 80, 50, mop=f.B12)
 b13 = button("b13", 35, 530, 80, 50, 4)
 b14 = button("b14", 130, 530, 80, 50, 5)
 b15 = button("b15", 220, 530, 80, 50, 6)
-b16 = button("b16", 350, 530, 80, 50)
+b16 = button("b16", 350, 530, 80, 50, mop=f.B16)
 b17 = button("b17", 35, 605, 80, 50, 1)
 b18 = button("b18", 130, 605, 80, 50, 2)
 b19 = button("b19", 220, 605, 80, 50, 3)
-b20 = button("b20", 35, 680, 80, 50)
+b20 = button("b20", 35, 680, 80, 50, op=f.clear)
 b21 = button("b21", 130, 680, 80, 50, 0)
 b22 = button("b22", 220, 680, 80, 50)
 b23 = button("b23", 350, 605, 80, 130)
@@ -79,12 +106,12 @@ objects = [
 
 # activate the pygame library .
 
-X = 466
-Y = 807
+WIDTH = 466
+HEIGHT = 807
 
 # create the display surface object
 # of specific dimension..e(X, Y).
-scrn = pygame.display.set_mode((X, Y))
+scrn = pygame.display.set_mode((WIDTH, HEIGHT))
 
 # set the pygame window name
 pygame.display.set_caption('TI-108 calculator')
@@ -107,7 +134,6 @@ while (status):
             pos = pygame.mouse.get_pos()
             for i in objects:
                 i.clicked(pos)
-
                 #if ((coi[6] >=pos[0] and pos[0]<=coi[5]) and (coi[8] >=pos[1] and pos[1]<=coi[7])) :
 
         # if event object type is QUIT
