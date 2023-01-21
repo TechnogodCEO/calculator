@@ -12,6 +12,7 @@ x = ""
 val1 = ""
 val2 = ""
 clrontype = False 
+curop = ""
 #initilize font
 Font = pygame.font.SysFont(None, 100)
 
@@ -45,6 +46,7 @@ class button:
             global x    
             global val1
             global clrontype
+            global curop 
             if i.value != None:
                 if (x == "" or len(x) <= 8):
                     x += str(i.value)
@@ -54,15 +56,20 @@ class button:
             elif i.name == "b20": 
                 x = ""
                 val1 = ""
+            elif i.name == "b23":
+                if val1 != "" and x != "" and curop != "":
+                  x = str(curop(float(val1),float(x)))[:8]
+                  
             elif i.op != None and x:
                 x = str(i.op(float(x)))[:8]
                 print(x)
             elif i.mop !=None and x:
                 
             
-                if not val1:
+                if not val1 or curop != i.mop:
                     val1 = x
                     clrontype = True
+                    curop = i.mop
                 else:
                     x = str(i.mop(float(val1), float(x)))
                     print(x) 
