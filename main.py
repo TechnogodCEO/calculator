@@ -43,6 +43,7 @@ class button:
         if i.button.collidepoint(pos):
             print("you pressed button " + self.name + " and the value is: " +
                   str(self.value))
+            pygame.draw.rect(scrn, pygame.Color(0,0,0,a = 55), i.button) 
             global x    
             global val1
             global clrontype
@@ -57,8 +58,10 @@ class button:
                 x = ""
                 val1 = ""
             elif i.name == "b23":
+                
                 if val1 != "" and x != "" and curop != "":
-                  x = str(curop(float(val1),float(x)))[:8]
+                   x = str(curop(float(val1),float(x)))[:8]
+                   clrontype = True
                   
             elif i.op != None and x:
                 x = str(i.op(float(x)))[:8]
