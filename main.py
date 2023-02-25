@@ -48,7 +48,7 @@ class button:
             global clrontype
             global curop 
             if i.value != None:
-                if (x == "" or len(x) <= 8):
+                if (x == "" or len(x) <= 7):
                     x += str(i.value)
                 if clrontype:
                     x = str(i.value)
@@ -58,10 +58,10 @@ class button:
                 val1 = ""
             elif i.name == "b23":
                 if val1 != "" and x != "" and curop != "":
-                  x = str(curop(float(val1),float(x)))[:8]
+                  x = str(curop(float(val1),float(x)))[:7]
                   
             elif i.op != None and x:
-                x = str(i.op(float(x)))[:8]
+                x = str(i.op(float(x)))[:7]
                 print(x)
             elif i.mop !=None and x:
                 
@@ -149,6 +149,8 @@ while (status):
         elif event.type == pygame.QUIT:
             status = False
 
+    scrn.blit(imp, (0, 0))
+  
     #draw output backround
     pygame.draw.rect(scrn, (200, 200, 200), pygame.Rect(55, 45, 355, 80))
 
